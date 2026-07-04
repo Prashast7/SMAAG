@@ -21,7 +21,6 @@ type NavbarClientProps = {
     shortName: string;
     tagline: string;
   };
-  contactHref: string;
   navigation: readonly NavigationItem[];
 };
 
@@ -34,11 +33,7 @@ function isActivePath(pathname: string, href: string) {
 }
 
 /** Handles active-link logic and mobile-drawer behavior for the shared navigation. */
-export function NavbarClient({
-  brand,
-  contactHref,
-  navigation,
-}: NavbarClientProps) {
+export function NavbarClient({ brand, navigation }: NavbarClientProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDivElement | null>(null);
@@ -142,12 +137,6 @@ export function NavbarClient({
           ))}
         </nav>
 
-        <div className="hidden lg:block">
-          <Button asChild variant="secondary">
-            <a href={contactHref}>Contact</a>
-          </Button>
-        </div>
-
         <Button
           ref={triggerRef}
           aria-controls="mobile-navigation"
@@ -199,15 +188,6 @@ export function NavbarClient({
               {item.label}
             </Link>
           ))}
-          <div className="pt-4">
-            <Button
-              asChild
-              className="w-full justify-center"
-              variant="secondary"
-            >
-              <a href={contactHref}>Contact</a>
-            </Button>
-          </div>
         </nav>
       </div>
     </>

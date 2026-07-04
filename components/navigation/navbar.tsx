@@ -5,7 +5,7 @@ import { NavbarClient } from "@/components/navigation/navbar-client";
 /** Renders the server-driven global navigation wrapper and passes centralized config to the client layer. */
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-40 border-b border-border/80 bg-background">
+    <header className="border-border/80 bg-background sticky top-0 z-40 border-b">
       <Container size="xl">
         <NavbarClient
           brand={{
@@ -13,7 +13,6 @@ export function Navbar() {
             shortName: siteConfig.shortName,
             tagline: siteConfig.tagline,
           }}
-          contactHref={`mailto:${siteConfig.email}`}
           navigation={siteConfig.navigation}
         />
       </Container>

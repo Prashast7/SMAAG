@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -10,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type NavigationItem = {
-  href: string;
+  href: Route;
   label: string;
 };
 
@@ -33,7 +34,11 @@ function isActivePath(pathname: string, href: string) {
 }
 
 /** Handles active-link logic and mobile-drawer behavior for the shared navigation. */
-export function NavbarClient({ brand, contactHref, navigation }: NavbarClientProps) {
+export function NavbarClient({
+  brand,
+  contactHref,
+  navigation,
+}: NavbarClientProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDivElement | null>(null);
@@ -73,9 +78,10 @@ export function NavbarClient({ brand, contactHref, navigation }: NavbarClientPro
         return;
       }
 
-      const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
+      const focusableElements =
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        );
 
       if (!focusableElements || focusableElements.length === 0) {
         return;
@@ -106,21 +112,28 @@ export function NavbarClient({ brand, contactHref, navigation }: NavbarClientPro
       <div className="flex h-18 items-center justify-between gap-6">
         <Link className="min-w-0 shrink-0" href="/" aria-label={brand.name}>
           <div className="flex flex-col">
-            <span className="text-small font-semibold tracking-[0.18em] text-foreground uppercase">
+            <span className="text-small text-foreground font-semibold tracking-[0.18em] uppercase">
               {brand.shortName}
             </span>
-            <span className="hidden text-caption sm:block">{brand.tagline}</span>
+            <span className="text-caption hidden sm:block">
+              {brand.tagline}
+            </span>
           </div>
         </Link>
 
-        <nav aria-label="Primary navigation" className="hidden items-center gap-1 lg:flex">
+        <nav
+          aria-label="Primary navigation"
+          className="hidden items-center gap-1 lg:flex"
+        >
           {items.map((item) => (
             <Link
               key={item.href}
               aria-current={item.active ? "page" : undefined}
               className={cn(
-                "rounded-full px-4 py-2 text-small font-medium",
-                item.active ? "bg-accent text-foreground" : "text-muted hover:bg-accent hover:text-foreground",
+                "text-small rounded-full px-4 py-2 font-medium",
+                item.active
+                  ? "bg-accent text-foreground"
+                  : "text-muted hover:bg-accent hover:text-foreground",
               )}
               href={item.href}
             >
@@ -152,7 +165,7 @@ export function NavbarClient({ brand, contactHref, navigation }: NavbarClientPro
       {open ? (
         <div
           aria-hidden="true"
-          className="fixed inset-0 top-[73px] z-30 bg-foreground/10 lg:hidden"
+          className="bg-foreground/10 fixed inset-0 top-[73px] z-30 lg:hidden"
           onClick={() => setOpen(false)}
         />
       ) : null}
@@ -163,7 +176,7 @@ export function NavbarClient({ brand, contactHref, navigation }: NavbarClientPro
         aria-label="Mobile navigation"
         aria-modal="true"
         className={cn(
-          "fixed inset-x-0 top-[73px] z-40 border-b border-border bg-background lg:hidden",
+          "border-border bg-background fixed inset-x-0 top-[73px] z-40 border-b lg:hidden",
           open ? "block" : "hidden",
         )}
         ref={dialogRef}
@@ -176,8 +189,10 @@ export function NavbarClient({ brand, contactHref, navigation }: NavbarClientPro
               ref={index === 0 ? firstLinkRef : undefined}
               aria-current={item.active ? "page" : undefined}
               className={cn(
-                "rounded-md px-3 py-3 text-body font-medium",
-                item.active ? "bg-accent text-foreground" : "text-muted hover:bg-accent hover:text-foreground",
+                "text-body rounded-md px-3 py-3 font-medium",
+                item.active
+                  ? "bg-accent text-foreground"
+                  : "text-muted hover:bg-accent hover:text-foreground",
               )}
               href={item.href}
             >
@@ -185,7 +200,11 @@ export function NavbarClient({ brand, contactHref, navigation }: NavbarClientPro
             </Link>
           ))}
           <div className="pt-4">
-            <Button asChild className="w-full justify-center" variant="secondary">
+            <Button
+              asChild
+              className="w-full justify-center"
+              variant="secondary"
+            >
               <a href={contactHref}>Contact</a>
             </Button>
           </div>

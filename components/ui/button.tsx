@@ -12,8 +12,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: "bg-primary text-primary-foreground hover:bg-primary/92",
-        secondary: "border border-border bg-secondary text-secondary-foreground hover:bg-accent",
-        outline: "border border-border bg-background text-foreground hover:bg-accent",
+        secondary:
+          "border border-border bg-secondary text-secondary-foreground hover:bg-accent",
+        outline:
+          "border border-border bg-background text-foreground hover:bg-accent",
         ghost: "bg-transparent text-foreground shadow-none hover:bg-accent",
       },
       size: {
@@ -37,26 +39,45 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   };
 
 /** Renders the shared button system used across actions and navigation. */
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { className, variant, size, asChild = false, loading = false, children, disabled, ...props },
-  ref,
-) {
-  const Comp = asChild ? Slot : "button";
-  const isDisabled = disabled || loading;
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  function Button(
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      loading = false,
+      children,
+      disabled,
+      ...props
+    },
+    ref,
+  ) {
+    const Comp = asChild ? Slot : "button";
+    const isDisabled = disabled || loading;
 
-  return (
-    <Comp
-      ref={ref}
-      aria-busy={loading}
-      aria-disabled={asChild ? isDisabled : undefined}
-      className={cn(buttonVariants({ variant, size, className }))}
-      disabled={asChild ? undefined : isDisabled}
-      {...props}
-    >
-      {loading ? <LoaderCircle aria-hidden="true" className="animate-spin" /> : null}
-      {children}
-    </Comp>
-  );
-});
+    return (
+      <Comp
+        ref={ref}
+        aria-busy={loading}
+        aria-disabled={asChild ? isDisabled : undefined}
+        className={cn(buttonVariants({ variant, size, className }))}
+        disabled={asChild ? undefined : isDisabled}
+        {...props}
+      >
+        {asChild ? (
+          children
+        ) : (
+          <>
+            {loading ? (
+              <LoaderCircle aria-hidden="true" className="animate-spin" />
+            ) : null}
+            {children}
+          </>
+        )}
+      </Comp>
+    );
+  },
+);
 
 export { buttonVariants };

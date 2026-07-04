@@ -9,7 +9,8 @@ type MetadataOverrides = {
 };
 
 export function createMetadata(overrides?: MetadataOverrides): Metadata {
-  const title = overrides?.title ?? `${siteConfig.shortName} | ${siteConfig.tagline}`;
+  const title =
+    overrides?.title ?? `${siteConfig.shortName} | ${siteConfig.tagline}`;
   const description = overrides?.description ?? siteConfig.description;
 
   return {
@@ -20,7 +21,13 @@ export function createMetadata(overrides?: MetadataOverrides): Metadata {
     },
     description,
     applicationName: siteConfig.name,
-    keywords: ["CPA firm", "tax advisory", "assurance", "accounting", "financial reporting"],
+    keywords: [
+      "CPA firm",
+      "assurance",
+      "advisory",
+      "bookkeeping",
+      "financial statements",
+    ],
     authors: [{ name: siteConfig.name }],
     creator: siteConfig.name,
     publisher: siteConfig.name,

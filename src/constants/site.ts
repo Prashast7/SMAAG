@@ -4,11 +4,10 @@ export const siteConfig = {
   domain: "smaagcpa.com",
   url: "https://smaagcpa.com",
   email: "shivangi@smaagcpa.com",
-  phone: "+1 (000) 000-0000",
   location: "San Francisco Bay Area, California",
   tagline: "Assurance. Advisory. Delivered.",
   description:
-    "A premium CPA firm focused on assurance, advisory, tax, and strategic financial insight for modern businesses and founders.",
+    "A California CPA firm bringing Big 4 expertise to growing businesses — bookkeeping, financial statement preparation, and business advisory.",
   locale: "en_US",
   address: {
     region: "California",

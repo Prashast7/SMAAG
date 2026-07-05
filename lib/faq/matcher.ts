@@ -1,4 +1,8 @@
-import { FAQ_KNOWLEDGE_BASE, type FaqEntry } from "@/lib/faq/knowledge-base";
+import {
+  FAQ_KNOWLEDGE_BASE,
+  FAQ_STARTER_QUESTIONS,
+  type FaqEntry,
+} from "@/lib/faq/knowledge-base";
 
 // Common English words that carry no matching signal on their own. Includes
 // apostrophe-stripped contractions (who's -> whos) since normalize() removes
@@ -319,4 +323,49 @@ export function getRelatedEntries(entry: FaqEntry, limit = 3): FaqEntry[] {
   }
 
   return related;
+}
+
+/** The 5 curated starter entries, resolved from FAQ_STARTER_QUESTIONS. */
+export const FAQ_STARTER_ENTRIES: FaqEntry[] = FAQ_STARTER_QUESTIONS.map(
+  (question) => FAQ_KNOWLEDGE_BASE.find((entry) => entry.question === question),
+).filter((entry): entry is FaqEntry => Boolean(entry));
+
+export const FAQ_PAGE_SIZE = 5;
+
+/** Sequential page through the full knowledge base for click-only browsing. */
+export function getFaqBatch(offset: number): {
+  entries: FaqEntry[];
+  nextOffset: number | null;
+} {
+  const entries = FAQ_KNOWLEDGE_BASE.slice(offset, offset + FAQ_PAGE_SIZE);
+  const nextOffset =
+    offset + FAQ_PAGE_SIZE < FAQ_KNOWLEDGE_BASE.length
+      ? offset + FAQ_PAGE_SIZE
+      : null;
+
+  return { entries, nextOffset };
+}
+
+// Short greetings only — capped at 3 tokens so a real question that happens
+// to start with "hi"/"hey" still falls through to normal matching.
+const GREETING_TOKENS = new Set([
+  "hi",
+  "hello",
+  "hey",
+  "hiya",
+  "yo",
+  "sup",
+  "howdy",
+  "greetings",
+  "good",
+  "morning",
+  "afternoon",
+  "evening",
+  "there",
+]);
+
+export function isGreeting(input: string): boolean {
+  const words = normalize(input).split(" ").filter(Boolean);
+  if (words.length === 0 || words.length > 3) return false;
+  return words.every((word) => GREETING_TOKENS.has(word));
 }

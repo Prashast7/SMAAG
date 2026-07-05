@@ -7,21 +7,36 @@ import { MessageCircle, Send, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
+  FAQ_CATEGORY_LABELS,
   FAQ_FALLBACK_RESPONSE,
-  FAQ_STARTER_QUESTIONS,
+  type FaqEntry,
 } from "@/lib/faq/knowledge-base";
-import { getRelatedEntries, matchFaq } from "@/lib/faq/matcher";
+import {
+  FAQ_STARTER_ENTRIES,
+  getFaqBatch,
+  getRelatedEntries,
+  isGreeting,
+  matchFaq,
+} from "@/lib/faq/matcher";
 import { cn } from "@/lib/utils";
+
+type Chip =
+  | { type: "question"; text: string; category: string }
+  | { type: "browse"; offset: number };
 
 type ChatMessage = {
   id: string;
   role: "bot" | "user";
   text: string;
-  chips?: string[];
+  chips?: Chip[];
 };
 
 const WELCOME_MESSAGE =
   "Hi, I'm the SMAAG FAQ assistant. Ask me anything about our services, or pick a question below.";
+const GREETING_REPLY =
+  "Hi there! Ask me anything about SMAAG, or pick a question below.";
+const BROWSE_MORE_LABEL = "See more questions →";
+const BROWSE_TRIGGER_TEXT = "See more questions";
 
 let messageIdCounter = 0;
 function nextMessageId() {
@@ -29,7 +44,30 @@ function nextMessageId() {
   return `msg-${messageIdCounter}`;
 }
 
+function toQuestionChips(entries: FaqEntry[]): Chip[] {
+  return entries.map((entry) => ({
+    type: "question",
+    text: entry.question,
+    category: entry.category,
+  }));
+}
+
+// Every bot reply offers a fresh "browse all" entry point, in addition to
+// whatever question-specific chips it also carries.
+function withBrowseChip(chips: Chip[]): Chip[] {
+  return [...chips, { type: "browse", offset: 0 }];
+}
+
 function answerQuestion(question: string): ChatMessage {
+  if (isGreeting(question)) {
+    return {
+      id: nextMessageId(),
+      role: "bot",
+      text: GREETING_REPLY,
+      chips: withBrowseChip(toQuestionChips(FAQ_STARTER_ENTRIES)),
+    };
+  }
+
   const match = matchFaq(question);
 
   if (!match) {
@@ -37,7 +75,7 @@ function answerQuestion(question: string): ChatMessage {
       id: nextMessageId(),
       role: "bot",
       text: FAQ_FALLBACK_RESPONSE,
-      chips: FAQ_STARTER_QUESTIONS,
+      chips: withBrowseChip(toQuestionChips(FAQ_STARTER_ENTRIES)),
     };
   }
 
@@ -47,7 +85,23 @@ function answerQuestion(question: string): ChatMessage {
     id: nextMessageId(),
     role: "bot",
     text: match.entry.answer,
-    chips: related.map((entry) => entry.question),
+    chips: withBrowseChip(toQuestionChips(related)),
+  };
+}
+
+function browseMessage(offset: number): ChatMessage {
+  const { entries, nextOffset } = getFaqBatch(offset);
+  const chips: Chip[] = toQuestionChips(entries);
+
+  if (nextOffset !== null) {
+    chips.push({ type: "browse", offset: nextOffset });
+  }
+
+  return {
+    id: nextMessageId(),
+    role: "bot",
+    text: "Here are more questions you can ask:",
+    chips,
   };
 }
 
@@ -69,7 +123,7 @@ export function FaqChatbot() {
           id: nextMessageId(),
           role: "bot",
           text: WELCOME_MESSAGE,
-          chips: FAQ_STARTER_QUESTIONS,
+          chips: withBrowseChip(toQuestionChips(FAQ_STARTER_ENTRIES)),
         },
       ]);
     }
@@ -119,6 +173,29 @@ export function FaqChatbot() {
     }, 250);
   }
 
+  function browseMore(offset: number) {
+    if (thinking) return;
+
+    setMessages((current) => [
+      ...current,
+      { id: nextMessageId(), role: "user", text: BROWSE_TRIGGER_TEXT },
+    ]);
+    setThinking(true);
+
+    window.setTimeout(() => {
+      setMessages((current) => [...current, browseMessage(offset)]);
+      setThinking(false);
+    }, 250);
+  }
+
+  function handleChipClick(chip: Chip) {
+    if (chip.type === "question") {
+      submitQuestion(chip.text);
+    } else {
+      browseMore(chip.offset);
+    }
+  }
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     submitQuestion(inputValue);
@@ -156,38 +233,72 @@ export function FaqChatbot() {
             className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
             ref={logRef}
           >
-            {messages.map((message) => (
-              <div key={message.id} className="space-y-2">
-                <div
-                  className={cn(
-                    "text-small max-w-[85%] rounded-lg px-3 py-2",
-                    message.role === "bot"
-                      ? "bg-muted text-foreground"
-                      : "bg-primary text-primary-foreground ml-auto",
-                  )}
-                >
-                  {message.text}
-                </div>
+            {messages.map((message) => {
+              let lastCategory: string | null = null;
 
-                {message.role === "bot" &&
-                message.chips &&
-                message.chips.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
-                    {message.chips.map((chip) => (
-                      <button
-                        className="border-border text-small hover:bg-accent rounded-full border px-3 py-1.5 text-left"
-                        disabled={thinking}
-                        key={chip}
-                        onClick={() => submitQuestion(chip)}
-                        type="button"
-                      >
-                        {chip}
-                      </button>
-                    ))}
+              return (
+                <div key={message.id} className="space-y-2">
+                  <div
+                    className={cn(
+                      "text-small max-w-[85%] rounded-lg px-3 py-2",
+                      message.role === "bot"
+                        ? "bg-muted text-foreground"
+                        : "bg-primary text-primary-foreground ml-auto",
+                    )}
+                  >
+                    {message.text}
                   </div>
-                ) : null}
-              </div>
-            ))}
+
+                  {message.role === "bot" &&
+                  message.chips &&
+                  message.chips.length > 0 ? (
+                    <div className="flex flex-col gap-2">
+                      {message.chips.map((chip) => {
+                        if (chip.type === "browse") {
+                          return (
+                            <button
+                              className="bg-accent text-small hover:bg-accent/70 w-fit rounded-full px-3 py-1.5 text-left font-medium"
+                              disabled={thinking}
+                              key="browse"
+                              onClick={() => handleChipClick(chip)}
+                              type="button"
+                            >
+                              {BROWSE_MORE_LABEL}
+                            </button>
+                          );
+                        }
+
+                        const showCategoryLabel =
+                          chip.category !== lastCategory;
+                        lastCategory = chip.category;
+
+                        return (
+                          <div
+                            key={chip.text}
+                            className="flex flex-col items-start gap-1"
+                          >
+                            {showCategoryLabel ? (
+                              <p className="text-caption text-muted tracking-[0.08em] uppercase">
+                                {FAQ_CATEGORY_LABELS[chip.category] ??
+                                  chip.category}
+                              </p>
+                            ) : null}
+                            <button
+                              className="border-border text-small hover:bg-accent rounded-full border px-3 py-1.5 text-left"
+                              disabled={thinking}
+                              onClick={() => handleChipClick(chip)}
+                              type="button"
+                            >
+                              {chip.text}
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })}
 
             {thinking ? (
               <div className="bg-muted text-muted text-small w-fit rounded-lg px-3 py-2">

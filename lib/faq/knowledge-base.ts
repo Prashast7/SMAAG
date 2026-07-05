@@ -18,6 +18,17 @@ export const FAQ_STARTER_QUESTIONS = [
   "How much does this cost?",
 ];
 
+/** Display labels for the `category` field, used when grouping browse chips. */
+export const FAQ_CATEGORY_LABELS: Record<string, string> = {
+  firm_identity: "About the Firm",
+  services: "Services",
+  getting_started: "Getting Started",
+  pricing: "Pricing",
+  trust_and_security: "Trust & Security",
+  why_smaag: "Why SMAAG",
+  contact: "Contact",
+};
+
 /**
  * Verbatim knowledge base. `id` values are inferred slugs that make the
  * `related` cross-references in the source content resolve to real entries —

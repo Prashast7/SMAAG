@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react";
 
+import { FaqChatbot } from "@/components/faq-chatbot";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { InquiryPopup } from "@/components/inquiry-popup";
 import { Navbar } from "@/components/navigation/navbar";
@@ -18,6 +19,7 @@ export function SiteShell({ children }: PropsWithChildren) {
         <SiteFooter />
       </div>
       <InquiryPopup />
+      <FaqChatbot />
     </>
   );
 }

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import { Section } from "@/components/layout/section";
+import { Reveal } from "@/components/motion/reveal";
 import { Divider } from "@/components/ui/divider";
 import { createMetadata } from "@/lib/metadata";
 
@@ -25,15 +26,17 @@ export default function AboutPage() {
   return (
     <Section spacing="lg">
       <Container size="md">
-        <PageHeader
-          description="SMAAG is a California Professional Corporation founded with a clear purpose: to bring the rigor and depth of Big 4 accounting to businesses that deserve that level of expertise without the Big 4 price tag. Based in the San Francisco Bay Area, the firm serves clients across all industries with a commitment to precision, integrity, and meaningful advisory relationships."
-          eyebrow="About"
-          title="About the firm"
-        />
+        <Reveal>
+          <PageHeader
+            description="SMAAG is a California Professional Corporation founded with a clear purpose: to bring the rigor and depth of Big 4 accounting to businesses that deserve that level of expertise without the Big 4 price tag. Based in the San Francisco Bay Area, the firm serves clients across all industries with a commitment to precision, integrity, and meaningful advisory relationships."
+            eyebrow="About"
+            title="About the firm"
+          />
+        </Reveal>
 
         <Divider className="my-12" />
 
-        <div className="space-y-6">
+        <Reveal className="space-y-6">
           <h2 className="text-h2 text-balance">
             About Shivangi Mansinghka, CPA — Founder
           </h2>
@@ -44,7 +47,7 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
       </Container>
     </Section>
   );

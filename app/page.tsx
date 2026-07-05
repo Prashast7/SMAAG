@@ -6,6 +6,7 @@ import { CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Grid } from "@/components/layout/grid";
 import { Section } from "@/components/layout/section";
+import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { siteConfig } from "@/constants/site";
@@ -40,7 +41,7 @@ export default function HomePage() {
     <>
       <Section spacing="lg">
         <Container size="lg">
-          <div className="mx-auto max-w-3xl space-y-8 text-center">
+          <Reveal className="mx-auto max-w-3xl space-y-8 text-center">
             <div className="space-y-4">
               <p className="text-caption tracking-[0.3em] uppercase">
                 {siteConfig.shortName}
@@ -59,20 +60,22 @@ export default function HomePage() {
                 <Link href="/contact#inquiry-form">Get in Touch</Link>
               </Button>
             </div>
-          </div>
+          </Reveal>
         </Container>
       </Section>
 
       <Section tone="subtle">
         <Container size="lg">
           <Grid columns={3} gap="lg">
-            {pillars.map((pillar) => (
-              <Card key={pillar.title} className="h-full">
-                <CardContent className="space-y-2 p-8">
-                  <h2 className="text-h3">{pillar.title}</h2>
-                  <p className="text-body text-muted">{pillar.description}</p>
-                </CardContent>
-              </Card>
+            {pillars.map((pillar, index) => (
+              <Reveal delayMs={index * 80} key={pillar.title}>
+                <Card className="h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                  <CardContent className="space-y-2 p-8">
+                    <h2 className="text-h3">{pillar.title}</h2>
+                    <p className="text-body text-muted">{pillar.description}</p>
+                  </CardContent>
+                </Card>
+              </Reveal>
             ))}
           </Grid>
         </Container>
@@ -80,7 +83,7 @@ export default function HomePage() {
 
       <Section>
         <Container size="md">
-          <div className="space-y-8">
+          <Reveal className="space-y-8">
             <h2 className="text-h2 text-balance">Why SMAAG</h2>
             <ul className="space-y-4">
               {reasons.map((reason) => (
@@ -93,7 +96,7 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         </Container>
       </Section>
     </>

@@ -10,14 +10,14 @@ import { createMetadata } from "@/lib/metadata";
 export const metadata: Metadata = createMetadata({
   title: "About",
   description:
-    "SMAAG is a California Professional Corporation bringing Big 4 caliber assurance and advisory expertise to growing businesses in the San Francisco Bay Area.",
+    "SMAAG is a California Professional Corporation bringing Big 4 caliber accounting and advisory expertise to growing businesses in the San Francisco Bay Area.",
 });
 
 const credentials = [
   "Licensed Certified Public Accountant — State of California",
   "Over a decade of experience in public accounting",
   "Big 4 and top-tier firm experience across KPMG, Deloitte, and Grant Thornton",
-  "Specialized in audit, assurance, and advisory services",
+  "Extensive background in audit, assurance, and advisory services",
   "Hands-on experience across multiple industries and complex engagements",
   "Brings institutional-quality judgment to every client relationship",
 ];
@@ -47,6 +47,9 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
+          <p className="text-small text-muted">
+            California CPA License No. 160958
+          </p>
         </Reveal>
       </Container>
     </Section>

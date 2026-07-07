@@ -63,7 +63,7 @@ export function SiteFooter() {
 
         <div className="text-small text-muted flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            &copy; {year} {siteConfig.shortName}. {siteConfig.footer.copyright}
+            &copy; {year} {siteConfig.footer.legalName}&nbsp;&nbsp;|&nbsp;&nbsp;CPA License No. 160958
           </p>
           <p>{siteConfig.tagline}</p>
         </div>

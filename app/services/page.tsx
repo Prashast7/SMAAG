@@ -18,16 +18,19 @@ export const metadata: Metadata = createMetadata({
     "Bookkeeping and accounting, financial statement preparation, and internal controls and business advisory services from SM Assurance & Advisory Group, APC.",
 });
 
-const services = [
-  {
-    title: "Bookkeeping & Accounting",
-    description:
-      "Accurate, organized, and timely financial records for your business.",
-  },
+const services: { title: string; description: string; disclaimer?: string }[] =
+  [
+    {
+      title: "Bookkeeping & Accounting",
+      description:
+        "Accurate, organized, and timely financial records for your business.",
+    },
   {
     title: "Financial Statement Preparation",
     description:
       "Clean, professional financial statements for internal use, lenders, and stakeholders.",
+    disclaimer:
+      "Financial statements are prepared by management. SMAAG does not express an opinion or any other form of assurance on these statements.",
   },
   {
     title: "Internal Controls & Business Advisory",
@@ -54,6 +57,11 @@ export default function ServicesPage() {
                     <CardDescription className="text-body">
                       {service.description}
                     </CardDescription>
+                    {service.disclaimer ? (
+                      <p className="text-caption text-muted pt-2">
+                        {service.disclaimer}
+                      </p>
+                    ) : null}
                   </CardContent>
                 </Card>
               </Reveal>
@@ -70,7 +78,9 @@ export default function ServicesPage() {
               As SMAAG grows, we plan to expand into audit and assurance
               services — including financial statement audits, reviews, and
               agreed-upon procedures — for businesses and organizations that
-              require the highest level of financial credibility.
+              require the highest level of financial credibility, subject to
+              applicable licensing requirements from the California Board of
+              Accountancy (CBA).
             </p>
           </Reveal>
         </Container>

@@ -41,7 +41,7 @@ export const FAQ_KNOWLEDGE_BASE: FaqEntry[] = [
     question: "What is SMAAG?",
     keywords: ["smaag", "firm", "company", "who", "are", "you", "about"],
     answer:
-      "SMAAG stands for SM Assurance & Advisory Group, APC — a California-licensed CPA firm based in Sunnyvale. Our tagline is 'Assurance. Advisory. Delivered.' We help businesses with bookkeeping, financial statement preparation, and internal controls and advisory work.",
+      "SMAAG stands for SM Assurance & Advisory Group, APC — a California-licensed CPA firm based in the Bay Area. Our tagline is 'Assurance. Advisory. Delivered.' We help businesses with bookkeeping, financial statement preparation, and internal controls and advisory work.",
     related: ["founder_background", "location", "services_overview"],
   },
   {
@@ -50,7 +50,7 @@ export const FAQ_KNOWLEDGE_BASE: FaqEntry[] = [
     question: "Who founded SMAAG?",
     keywords: ["founder", "founded", "who", "started", "owner", "shivangi"],
     answer:
-      "SMAAG was founded by Shivangi Mansinghka, a licensed California CPA with experience at KPMG, Deloitte, PwC/Aprio, and Grant Thornton. She brings Big 4-caliber expertise to businesses that need senior-level financial guidance without Big 4 overhead.",
+      "SMAAG was founded by Shivangi Mansinghka, a licensed California CPA with experience at KPMG, Deloitte, and Grant Thornton. She brings Big 4 and other leading firms experience to businesses that need senior-level financial guidance without the overhead.",
     related: ["firm_identity", "why_smaag"],
   },
   {
@@ -80,11 +80,12 @@ export const FAQ_KNOWLEDGE_BASE: FaqEntry[] = [
       "address",
       "based",
       "office",
-      "sunnyvale",
+      "bay",
+      "area",
       "california",
     ],
     answer:
-      "SMAAG is based in Sunnyvale, California, and is licensed to practice as a CPA firm in California.",
+      "SMAAG is based in the Bay Area, California, and is licensed to practice as a CPA firm in California.",
     related: ["contact_info", "remote_clients"],
   },
   {
@@ -226,7 +227,7 @@ export const FAQ_KNOWLEDGE_BASE: FaqEntry[] = [
       "engage",
     ],
     answer:
-      "Getting started is simple — email shivangi@smaagcpa.com or reach out through our LinkedIn page to schedule an initial conversation. We'll talk through your needs, scope the right services, and get you set up from there.",
+      "Getting started is simple — email shivangi@smaagcpa.com to schedule an initial conversation. We'll talk through your needs, scope the right services, and get you set up from there.",
     related: ["engagement_process", "contact_info"],
   },
   {
@@ -259,7 +260,7 @@ export const FAQ_KNOWLEDGE_BASE: FaqEntry[] = [
       "paperwork",
     ],
     answer:
-      "This depends on the services you need, but typically includes access to your accounting software (like QuickBooks or Xero), recent financial statements, and relevant bank or transaction records. We'll walk you through exactly what's needed once we've scoped your engagement.",
+      "It depends on your business size and setup. We're flexible and adapt to what works best for you. We'll outline exactly what's needed during our initial conversation.",
     related: ["onboarding_documents", "engagement_process"],
   },
   {
@@ -366,7 +367,7 @@ export const FAQ_KNOWLEDGE_BASE: FaqEntry[] = [
       "versus",
     ],
     answer:
-      "SMAAG gives you direct access to Big 4-caliber expertise — our founder has worked at KPMG, Deloitte, PwC/Aprio, and Grant Thornton — without the overhead, bureaucracy, or junior-staff turnover common at larger firms. You get senior-level attention on your business.",
+      "SMAAG gives you direct access to a licensed CPA with Big 4 and other leading firms experience. You work with senior-level expertise on every engagement, with personalized attention to your business's unique needs — not passed down through layers of staff.",
     related: ["founder_background", "firm_identity"],
   },
   {
@@ -409,7 +410,7 @@ export const FAQ_KNOWLEDGE_BASE: FaqEntry[] = [
       "touch",
     ],
     answer:
-      "You can reach us at shivangi@smaagcpa.com, or find us on LinkedIn under SMAAG. We'll respond and set up time to talk through your needs.",
+      "You can reach us at shivangi@smaagcpa.com. We'll respond and set up time to talk through your needs.",
     related: ["getting_started", "location"],
   },
   {

@@ -24,12 +24,14 @@ const credentials = [
 
 export default function AboutPage() {
   return (
-    <Section spacing="lg">
+    <Section
+      className="bg-gradient-to-b from-[oklch(0.96_0.018_196)] to-background"
+      spacing="lg"
+    >
       <Container size="md">
         <Reveal>
           <PageHeader
             description="SMAAG is a California Professional Corporation founded with a clear purpose: to bring the rigor and depth of Big 4 accounting to businesses that deserve that level of expertise without the Big 4 price tag. Based in the San Francisco Bay Area, the firm serves clients across all industries with a commitment to precision, integrity, and meaningful advisory relationships."
-            eyebrow="About"
             title="About the firm"
           />
         </Reveal>

@@ -20,10 +20,13 @@ export const metadata: Metadata = createMetadata({
 
 export default function VisionPage() {
   return (
-    <Section spacing="lg">
+    <Section
+      className="bg-gradient-to-b from-[oklch(0.96_0.018_196)] to-background"
+      spacing="lg"
+    >
       <Container size="md">
         <Reveal>
-          <PageHeader eyebrow="Vision" title="Our Vision" />
+          <PageHeader title="Our Vision" />
         </Reveal>
 
         <div className="mt-10 space-y-6">

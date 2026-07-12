@@ -42,18 +42,21 @@ const services: { title: string; description: string; disclaimer?: string }[] =
 export default function ServicesPage() {
   return (
     <>
-      <Section spacing="lg">
+      <Section
+        className="bg-gradient-to-b from-[oklch(0.96_0.018_196)] to-background"
+        spacing="lg"
+      >
         <Container size="lg">
           <Reveal>
-            <PageHeader eyebrow="Services" title="Current services" />
+            <PageHeader title="Current services" />
           </Reveal>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {services.map((service, index) => (
               <Reveal delayMs={index * 80} key={service.title}>
-                <Card className="transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                <Card className="border-t-2 border-t-primary/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                   <CardContent className="space-y-2 p-8">
-                    <CardTitle>{service.title}</CardTitle>
+                    <CardTitle className="text-primary">{service.title}</CardTitle>
                     <CardDescription className="text-body">
                       {service.description}
                     </CardDescription>

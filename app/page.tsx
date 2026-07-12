@@ -39,15 +39,18 @@ const reasons = [
 export default function HomePage() {
   return (
     <>
-      <Section spacing="lg">
+      <Section
+        className="bg-gradient-to-b from-[oklch(0.96_0.018_196)] to-background"
+        spacing="lg"
+      >
         <Container size="lg">
           <Reveal className="mx-auto max-w-3xl space-y-8 text-center">
             <div className="space-y-4">
-              <p className="text-caption tracking-[0.3em] uppercase">
+              <p className="text-caption text-primary font-semibold tracking-[0.3em] uppercase">
                 {siteConfig.shortName}
               </p>
               <h1 className="text-display text-balance">{siteConfig.name}</h1>
-              <p className="text-h4 text-muted font-normal">
+              <p className="text-h4 text-primary/80 font-normal">
                 {siteConfig.tagline}
               </p>
             </div>
@@ -69,9 +72,9 @@ export default function HomePage() {
           <Grid columns={3} gap="lg">
             {pillars.map((pillar, index) => (
               <Reveal delayMs={index * 80} key={pillar.title}>
-                <Card className="h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                <Card className="h-full border-t-2 border-t-primary/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                   <CardContent className="space-y-2 p-8">
-                    <h2 className="text-h3">{pillar.title}</h2>
+                    <h2 className="text-h3 text-primary">{pillar.title}</h2>
                     <p className="text-body text-muted">{pillar.description}</p>
                   </CardContent>
                 </Card>
@@ -84,7 +87,10 @@ export default function HomePage() {
       <Section>
         <Container size="md">
           <Reveal className="space-y-8">
-            <h2 className="text-h2 text-balance">Why SMAAG</h2>
+            <h2 className="text-h2 text-balance">
+              Why{" "}
+              <span className="text-primary">SMAAG</span>
+            </h2>
             <ul className="space-y-4">
               {reasons.map((reason) => (
                 <li key={reason} className="flex gap-3">

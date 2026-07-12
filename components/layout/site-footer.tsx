@@ -9,7 +9,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-border bg-background border-t">
+    <footer className="border-border border-t bg-[oklch(0.97_0.01_196)]">
       <Container className="py-10 sm:py-12" size="xl">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
           <div className="space-y-4">

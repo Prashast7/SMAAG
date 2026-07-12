@@ -19,12 +19,14 @@ export const metadata: Metadata = createMetadata({
 
 export default function ContactPage() {
   return (
-    <Section spacing="lg">
+    <Section
+      className="bg-gradient-to-b from-[oklch(0.96_0.018_196)] to-background"
+      spacing="lg"
+    >
       <Container size="lg">
         <Reveal>
           <PageHeader
             description="Available for new client inquiries."
-            eyebrow="Contact"
             title="Get in touch"
           />
         </Reveal>
